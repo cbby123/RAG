@@ -53,12 +53,17 @@ streamlit run web_streamlit.py
 访问 http://localhost:8501 即可使用聊天界面。
 🧪 接口测试
 方式 1：Swagger UI
+
 访问 http://localhost:6066/docs，点击 /chat → Try it out，输入 message 参数后执行，查看流式响应。
+
 方式 2：Python 脚本
+
 运行 test_ollama_api.py 测试 Ollama API 连通性：
+
 bash
-运行
+
 python test_ollama_api.py
+
 📌 注意事项
 SSL 证书问题：启动前需执行 unset SSL_CERT_FILE 和 unset SSL_CERT_DIR，避免证书路径错误。
 流式渲染优化：前端使用 st.empty() 实现流畅打字效果，避免逐行刷屏。
