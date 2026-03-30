@@ -1,77 +1,63 @@
 📚 Qwen2.5 RAG 聊天助手 - README.md
 markdown
-# Qwen2.5 RAG 聊天助手
+# RAG 项目合集 | 开源大模型 Qwen2.5 实战
+基于 **Ollama + FastAPI + Streamlit + Langchain** 搭建的完整 RAG + Agent + 成语接龙 项目
 
-基于 Ollama + FastAPI + Streamlit 构建的轻量级聊天助手，完成案例3至 Langchain-chain 之前的全部功能。
+## 📌 项目介绍
+本项目包含课程案例 3～8.5 的全部内容：
+- 本地 Qwen2.5 大模型部署
+- RAG 检索增强生成
+- Agent 智能体
+- **Langchain-chain 链实现**
+- **成语接龙游戏（AI自玩 + 玩家VS AI 对战）**
 
-## ✨ 功能特性
-- 🧠 **本地模型推理**：基于 Ollama 运行 Qwen2.5 模型，无需依赖外部 API
-- 🔌 **流式接口服务**：FastAPI 提供 `/chat` 流式接口，支持实时文字输出
-- 🎨 **可视化聊天界面**：Streamlit 前端，支持流畅的打字机效果和多轮对话
-- 📦 **一键部署**：完整的环境配置与代码结构，方便快速复用
+## ✨ 已完成功能
+✅ 本地大模型运行（Ollama + Qwen2.5-rag）
+✅ FastAPI 后端流式接口
+✅ Streamlit 可视化聊天界面
+✅ Langchain LCEL 链式调用
+✅ **成语接龙游戏（双模式）**
+  - 模式 1：AI 自动接龙自己玩
+  - 模式 2：玩家 VS AI 对战
+  - 基于成语文档校验，不在文档内判负
+  - 随机开头，每次不重复
 
-## 📁 项目结构
-RAG/├── ollama/│ └── Modelfile # Ollama 模型配置文件（定义 qwen2.5-rag）├── api_fastapi.py # FastAPI 后端服务代码├── web_streamlit.py # Streamlit 前端聊天界面├── test_ollama_api.py # Ollama API 测试脚本└── .gitignore # Git 忽略文件配置
+## 📁 项目文件结构
+RAG/├── api_fastapi.py # FastAPI 后端服务├── web_streamlit.py # 聊天前端界面├── langchain_chain_idiom_game.py # Langchain 链 + 成语接龙游戏├── idioms.txt # 成语库（130+ 成语）├── README.md # 项目说明└── .gitignore # Git 忽略文件
 plaintext
 
 ## 🚀 快速启动
 
-### 1. 环境准备
-- 已安装 Anaconda，创建并激活环境：
-  ```bash
-  conda create -n RAG python=3.10
-  conda activate RAG
-安装依赖：
+### 1. 环境安装
+```bash
+pip install fastapi uvicorn openai streamlit httpx langchain langchain-openai
+2. 启动聊天接口
 bash
 运行
-pip install fastapi uvicorn openai streamlit httpx
-2. 启动 Ollama 模型
-bash
-运行
-# 拉取基础模型
-ollama pull qwen2.5
-
-# 创建自定义模型
-cd ollama
-ollama create qwen2.5-rag -f Modelfile
-3. 启动 FastAPI 后端
-bash
-运行
-conda activate RAG
-unset SSL_CERT_FILE
-unset SSL_CERT_DIR
 python api_fastapi.py
-服务运行在 http://localhost:6066，可访问 http://localhost:6066/docs 测试接口。
-4. 启动 Streamlit 前端
-新开终端执行：
+3. 启动聊天界面
 bash
 运行
-conda activate RAG
-unset SSL_CERT_FILE
-unset SSL_CERT_DIR
 streamlit run web_streamlit.py
-访问 http://localhost:8501 即可使用聊天界面。
-🧪 接口测试
-方式 1：Swagger UI
-
-访问 http://localhost:6066/docs，点击 /chat → Try it out，输入 message 参数后执行，查看流式响应。
-
-方式 2：Python 脚本
-
-运行 test_ollama_api.py 测试 Ollama API 连通性：
-
+4. 启动成语接龙游戏（Langchain）
 bash
-
-python test_ollama_api.py
-
-📌 注意事项
-SSL 证书问题：启动前需执行 unset SSL_CERT_FILE 和 unset SSL_CERT_DIR，避免证书路径错误。
-流式渲染优化：前端使用 st.empty() 实现流畅打字效果，避免逐行刷屏。
-Git 提交：代码已上传至 GitHub 仓库，可直接克隆使用。
-📝 更新日志
-v1.0.0：完成基础聊天功能，包含 Ollama 模型、FastAPI 后端和 Streamlit 前端
-优化流式渲染效果，提升用户体验
-修复 SSL 证书相关问题
-🤝 贡献
-欢迎提交 Issue 或 Pull Request 改进项目！
-plaintext
+运行
+python langchain_chain_idiom_game.py
+🎮 成语接龙游戏说明
+游戏模式
+AI 自己玩：自动随机开头，连续接龙
+玩家 VS AI：玩家输入成语，AI 自动接，违规判负
+游戏规则
+成语必须来自 idioms.txt
+必须用上一个成语最后一个字开头
+违规 / 不在文档内 → 直接判负
+📚 成语文档
+包含 130+ 常用成语，支持自定义扩展。
+📝 课程完成进度
+开源大模型部署
+Langchain-chain 链实现
+8.5 成语接龙游戏（双模式） ✅ 已完成
+🤖 模型信息
+模型：Qwen2.5
+运行：Ollama
+自定义模型：qwen2.5-rag
